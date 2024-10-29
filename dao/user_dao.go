@@ -70,7 +70,7 @@ func (d *DAO) IsUserIdExists(id int) (bool, error) {
 	var db *sql.DB = (*sql.DB)(d)
 
 	if rows, err := db.Query(
-		"SELECT COUNT(*) > 0 FROM `user` WHERE `id` = ? AND `deleted` = FALSE",
+		"SELECT COUNT(*) > 0 FROM `user` WHERE `id` = ?",
 		id,
 	); err != nil {
 		return false, err
@@ -97,7 +97,7 @@ func (d *DAO) IsUserExistsExists(name string) (bool, error) {
 	var db *sql.DB = (*sql.DB)(d)
 
 	if rows, err := db.Query(
-		"SELECT COUNT(*) > 0 FROM `user` WHERE `name` = ? AND `deleted` = FALSE",
+		"SELECT COUNT(*) > 0 FROM `user` WHERE `name` = ?",
 		name,
 	); err != nil {
 		return false, err
@@ -123,7 +123,7 @@ func (d *DAO) IsUserExistsExists(name string) (bool, error) {
 func (d *DAO) SelectUserById(id int) (*pojo.User, error) {
 	var db *sql.DB = (*sql.DB)(d)
 
-	if rows, err := db.Query("SELECT `name`, `salt`, `password`, `access_token`, `admin`, `create_time`, `last_login_time` FROM `user` WHERE `id` = ? AND `deleted` = FALSE"); err != nil {
+	if rows, err := db.Query("SELECT `name`, `salt`, `password`, `access_token`, `admin`, `create_time`, `last_login_time` FROM `user` WHERE `id` = ?"); err != nil {
 		return nil, err
 	} else {
 		defer func(rows *sql.Rows) {
@@ -156,7 +156,7 @@ func (d *DAO) SelectUserById(id int) (*pojo.User, error) {
 func (d *DAO) SelectUserByName(name string) (*pojo.User, error) {
 	var db *sql.DB = (*sql.DB)(d)
 
-	if rows, err := db.Query("SELECT `id`, `salt`, `password`, `access_token`, `admin`, `create_time`, `last_login_time` FROM `user` WHERE `id` = ? AND `deleted` = FALSE"); err != nil {
+	if rows, err := db.Query("SELECT `id`, `salt`, `password`, `access_token`, `admin`, `create_time`, `last_login_time` FROM `user` WHERE `id` = ?"); err != nil {
 		return nil, err
 	} else {
 		defer func(rows *sql.Rows) {
